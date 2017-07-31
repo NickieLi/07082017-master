@@ -13,10 +13,10 @@ namespace chdemo
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class er_modelEntities1 : DbContext
+    public partial class projectEntities : DbContext
     {
-        public er_modelEntities1()
-            : base("name=er_modelEntities1")
+        public projectEntities()
+            : base("name=projectEntities")
         {
         }
     
@@ -25,6 +25,6 @@ namespace chdemo
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<historypressure> historypressure { get; set; }
+        public virtual DbSet<record_estimate> record_estimate { get; set; }
     }
 }

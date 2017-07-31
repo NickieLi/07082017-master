@@ -1,46 +1,166 @@
-﻿@{
+﻿@model IEnumerable<historypressure>
+@{
     ViewBag.Title = "Home Page";
 }
-<h2>蒸汽壓力預測</h2>
-<div class="jumbotron">
-     <table id="myTable" style="width:100%">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Estimate</th>
-                <th>Actual</th>
-                <th>Difference</th>
-            </tr>
-        </thead>
-    </table>
-</div>
-<style>
-    tr.odd {
-        background-color: #CCEEFF !important;
-    }
-</style>
+@*@model System.DateTime*@
 
-@* Load datatable css *@
-<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
-@* Load datatable js *@
-@section Scripts{
-    <script src="~/Scripts/jquery.dataTables.min.js"></script>">
-    <script>
-        $(document).ready(function () {
-            serverSide: true,
-                $('#myTable').DataTable({
-                    "ajax": {
-                        "url": "/home/loaddata",
-                        "type": "GET",
-                        "datatype": "json"
-                    },
-                    "columns": [
-                        { "data": "Time", "autoWidth": true },
-                        { "data": "EstimatePressure", "autoWidth": true },
-                    { "data": "ActualPressure", "autoWidth": true },
-                        { "data": "PressureDiff", "autoWidth": true }
-                    ]
-                });
-        });
-    </script>
+<h2>蒸汽壓力記錄</h2>
+<script src="~/Scripts/SystemTime.js"></script>
+<body onload="startTime()">
+    <div id="txt"></div>
+</body>
+@using (Html.BeginForm("About","Home",FormMethod.Get))
+{
+    <p>
+        Date : @Html.TextBox("date")
+        <br />
+        Hours: @Html.DropDownList("Hours",String.Empty)
+        <input type="submit" value="Search" />
+    </p>
 }
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Minutes)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ActualPressure)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.EstimatePressure)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DeltaPressure)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Minutes)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelitem => item.ActualPressure)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelitem => item.EstimatePressure)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelitem => item.DeltaPressure)
+                </td>
+            </tr>
+        }
+    </tbody>
+    </table>
+
+@*@Scripts.Render("~/bundles/clock")
+
+
+<script>
+    function DiplayClock() {
+        var currentTime = updateClock();
+        document.getElementById("clock").firstChild.nodeValue = currentTime;
+    }
+</script>
+
+
+
+
+
+<div class="jumbotron">
+
+    @section scripts
+    {
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(DownloadChartData);
+
+
+                function DownloadChartData() {
+                    $.ajax({
+                        url: '@Url.Action("GetChartData", "Home")',
+                        success: function (response) {
+                            ShowChart(response);
+                        },
+                        error: function (xhr, status, error) {
+                            alert(error);
+                        }
+                    });
+
+                };
+              function ShowChart(data){
+                    var options = {
+                        title: '鍊條式燃煤蒸汽鍋爐蒸汽壓力記錄',
+                        height: 300, //如果要改變圖的長度就改這邊，width刪掉
+                        axisTitlesPosition: "蒸汽壓力記錄",
+
+                        leged: { ponsition: 'in' },
+                        chartArea: { width: "70%", height: "50%" },
+
+                        vAxis: {
+
+
+                            title: '蒸汽壓力(kgf/cm2G)'
+
+                        },
+                        hAxis: {
+
+                            title: '時間',
+                            direction: '-1',
+                            slantedText: 'false',
+                            showTextEvery: '1'
+
+
+                        },
+
+                        animation:
+                        {
+                            duration: 1000,
+                            easing: 'in',
+                            startup: true
+                        }
+
+
+                    };
+                    var dataTable = new google.visualization.DataTable(data.dataTable);
+                    var chart = new google.visualization.LineChart(document.getElementById('chart-area'));
+                    chart.draw(dataTable, options);
+              };
+
+
+              //讓圖可以隨window size調整
+              $(window).resize(function () {
+                  DownloadChartData()
+              });
+
+
+
+        </script>
+    }
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="chart-area" class="chart" style="position :center"></div>
+        </div>
+    </div>
+</div>*@
+

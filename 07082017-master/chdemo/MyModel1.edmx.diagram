@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ad24cd5bbacc48ef85434942f6b1eefb" Name="Diagram1">
-        <EntityTypeShape EntityType="er_modelModel.historypressure" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="7ff01a0c471449639d1f2033d2c52c37" Name="Diagram1">
+        <EntityTypeShape EntityType="projectModel.record_estimate" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

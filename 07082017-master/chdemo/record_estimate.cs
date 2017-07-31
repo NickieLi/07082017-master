@@ -12,14 +12,13 @@ namespace chdemo
     using System;
     using System.Collections.Generic;
     
-    public partial class historypressure
+    public partial class record_estimate
     {
         public int ID { get; set; }
         public string Date { get; set; }
-        public string Hours { get; set; }
-        public string Minutes { get; set; }
+        public string Time { get; set; }
         public Nullable<float> ActualPressure { get; set; }
-        public float EstimatePressure { get; set; }
+        public Nullable<float> EstimatePressure { get; set; }
         public Nullable<float> DeltaPressure { get; set; }
     }
 }

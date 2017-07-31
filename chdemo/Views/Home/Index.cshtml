@@ -1,12 +1,29 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<h2>蒸汽壓力記錄</h2>
+@*@model System.DateTime*@
 
-@if (Session["Account"] != null)
-{
-    <h4>Hello @Session["Account"].ToString()</h4>
-}
+<h2>蒸汽壓力記錄</h2>
+<script src="~/Scripts/SystemTime.js"></script>
+<body onload="startTime()">
+    <div id="txt"></div>
+</body>
+
+
+
+@Scripts.Render("~/bundles/clock")
+
+
+<script>
+    function DiplayClock() {
+        var currentTime = updateClock();
+        document.getElementById("clock").firstChild.nodeValue = currentTime;
+    }
+</script>
+
+
+
+
 
 <div class="jumbotron">
     

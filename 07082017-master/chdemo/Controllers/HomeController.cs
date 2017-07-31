@@ -10,37 +10,21 @@ namespace chdemo.Controllers
 {
     public class HomeController : Controller
     {
-        private er_modelEntities3 db = new er_modelEntities3();
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About(string Date,string Hours)
+        public ActionResult About()
         {
-            ViewBag.Hours = new SelectList(db.historypressure,"Hours","Hours");
-            var date = from d in db.historypressure
-                       select d;
-            if (!string.IsNullOrEmpty(Date))
-            {
-                date = date.Where(c => c.Date.Contains(Date));
-            }
-            if (!string.IsNullOrEmpty(Hours))
-            {
-                string hr = Convert.ToString(Hours);
-                return View(date.Where(s => s.Hours == hr));
-            }
-            else
-            {
-                return View(date);
-            }
+            return View();
         }
 
         public ActionResult loaddata()
         {
-            using (chdemo.er_modelEntities3 dc = new chdemo.er_modelEntities3())
+            using (chdemo.projectEntities dc = new chdemo.projectEntities())
             {
-                var data = dc.historypressure.OrderBy(a => a.Minutes).ToList();
+                var data = dc.record_estimate.OrderBy(a => a.Time).ToList();
                 return Json(new { data = data }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -53,9 +37,10 @@ namespace chdemo.Controllers
         }
 
 
+
         public ActionResult GetChartData()
         {
-            List<historypressure> data = new List<historypressure>();
+            List<record_estimate> data = new List<record_estimate>();
             var dt = new VisualizationDataTable();
             var chart = new ChartViewModel
             {
@@ -68,15 +53,15 @@ namespace chdemo.Controllers
 
 
             //Here MyDatabaseEntities  is our dbContext
-            using (er_modelEntities3 dc = new er_modelEntities3())
+            using (projectEntities dc = new projectEntities())
             {
                         
-                data = dc.historypressure.ToList();
+                data = dc.record_estimate.ToList();
 
             }
 
 
-            var sortbytime = data.OrderByDescending(x => x.Minutes).ToList();
+            var sortbytime = data.OrderByDescending(x => x.Time).ToList();
 
 
             dt.AddColumn("Date", "string");
@@ -86,7 +71,7 @@ namespace chdemo.Controllers
             int counter = 0;
             foreach (var item in sortbytime)
             {
-                dt.NewRow(item.Minutes, item.ActualPressure, item.EstimatePressure);
+                dt.NewRow(item.Time, item.ActualPressure, item.EstimatePressure);
                 counter++;
                 if (counter >= 12)
                     break;

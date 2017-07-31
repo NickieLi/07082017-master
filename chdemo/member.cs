@@ -19,18 +19,20 @@ namespace chdemo
         public int ID { get; set; }
 
         [DisplayName("Name")]
-        public string Account { get; set; }
-        [Required(ErrorMessage ="This field is required.")]
-
-        public string Email { get; set; }
         [Required(ErrorMessage = "This field is required.")]
+        public string Account { get; set; }
 
-        public string Password { get; set; }
+        [Required(ErrorMessage = "This field is required.")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
         [Required(ErrorMessage = "This field is required.")]
         [DataType(DataType.Password)]
-        [DisplayName("Comfirm Password")]
-        [Compare("Password")]
+        public string Password { get; set; }
 
+        [DisplayName("Comfirm Password")]
+        [DataType(DataType.Password)]
+        [Compare("Password")]
         public string ComfirmPassword { get; set; }
 
     }
