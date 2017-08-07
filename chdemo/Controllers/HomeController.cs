@@ -18,7 +18,7 @@ namespace chdemo.Controllers
 
         public ActionResult About(string Date,string Hours)
         {
-            ViewBag.Hours = new SelectList(db.historypressure,"Hours","Hours");
+            ViewBag.Hours = new SelectList(db.historypressure, "Hours", "Hours");
             var date = from d in db.historypressure
                        select d;
             if (!string.IsNullOrEmpty(Date))
@@ -28,20 +28,12 @@ namespace chdemo.Controllers
             if (!string.IsNullOrEmpty(Hours))
             {
                 string hr = Convert.ToString(Hours);
-                return View(date.Where(s => s.Hours == hr));
+                date = date.Where(c => c.Hours.Contains(Hours));
+                return View(date);
             }
             else
             {
                 return View(date);
-            }
-        }
-
-        public ActionResult loaddata()
-        {
-            using (chdemo.er_modelEntities3 dc = new chdemo.er_modelEntities3())
-            {
-                var data = dc.historypressure.OrderBy(a => a.Minutes).ToList();
-                return Json(new { data = data }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -70,7 +62,7 @@ namespace chdemo.Controllers
             //Here MyDatabaseEntities  is our dbContext
             using (er_modelEntities3 dc = new er_modelEntities3())
             {
-                        
+
                 data = dc.historypressure.ToList();
 
             }
@@ -88,17 +80,34 @@ namespace chdemo.Controllers
             {
                 dt.NewRow(item.Minutes, item.ActualPressure, item.EstimatePressure);
                 counter++;
-                if (counter >= 12)
+                if (counter >= 13)
                     break;
 
             }
 
-
-
-
-
-
             return Content(JsonConvert.SerializeObject(chart), "application/json");
         }
+
+        //public ActionResult SearchChartData(string Date, string Hours)
+        //{
+            //ViewBag.Hours = new SelectList(db.historypressure, "Hours", "Hours");
+            //var date = from d in db.historypressure
+            //           select d;
+            //if (!string.IsNullOrEmpty(Date))
+            //{
+            //    date = date.Where(c => c.Date.Contains(Date));
+            //}
+            //return View(date);
+            //if (!string.IsNullOrEmpty(Hours))
+            //{
+            //    string hr = Convert.ToString(Hours);
+            //    return View(date.Where(s => s.Hours == hr));
+            //}
+            //else
+            //{
+            //    return View(date);
+            //}
+        //}
+
     }
 }
