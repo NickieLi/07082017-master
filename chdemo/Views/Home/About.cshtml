@@ -4,68 +4,71 @@
 }
 
 
-<h2>蒸汽壓力記錄</h2>
-<script src="~/Scripts/SystemTime.js"></script>
-<body onload="startTime()">
-    <div id="txt"></div>
-</body>
-@using (Html.BeginForm("About", "Home", FormMethod.Get))
-{
-    <p>
-        <b>Date :</b> @Html.TextBox("date")
-        <b>Hours :</b> @Html.TextBox("Hours",String.Empty)
-        <br />
-        <br />
-        <input type="submit" value="Search" />
-    </p>
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
+    <h2>蒸汽壓力記錄</h2>
+    <script src="~/Scripts/SystemTime.js"></script>
+    <body onload="startTime()">
+        <div id="txt"></div>
+    </body>
+    @using (Html.BeginForm("About", "Home", FormMethod.Get))
+    {
+        <p>
+            <b>Date :</b> @Html.TextBox("date")
+            <b>Hours :</b> @Html.TextBox("Hours", String.Empty)
+            <br />
+            <br />
+            <input type="submit" value="Search" />
+        </p>
+    }
 
-            <th>
-                @Html.DisplayNameFor(model => model.Minutes)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.ActualPressure)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.EstimatePressure)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.DeltaPressure)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="jumbotron" style="font-size: 15px">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelitem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelitem => item.Minutes)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelitem => item.ActualPressure)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Minutes)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelitem => item.EstimatePressure)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActualPressure)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelitem => item.DeltaPressure)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstimatePressure)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.DeltaPressure)
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Minutes)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelitem => item.ActualPressure)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelitem => item.EstimatePressure)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelitem => item.DeltaPressure)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
