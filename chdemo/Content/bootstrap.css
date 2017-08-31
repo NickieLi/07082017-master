@@ -4856,6 +4856,10 @@ textarea.input-group-sm > .input-group-btn > .btn {
   background-color: #5cb85c;
 }
 
+.title {
+    background-color: #DDDDDD;
+}
+
 .label-success[href]:hover,
 .label-success[href]:focus {
   background-color: #449d44;

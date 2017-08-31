@@ -1,4 +1,89 @@
-﻿@{
+﻿@model IEnumerable<parameter>
+@{
     ViewBag.Title = "Home Page";
 }
-<h2>蒸汽壓力預測</h2>
+<div style="font-size: 15px;background-color: lavender">
+    <h2>建議參數</h2>
+    <script src="~/Scripts/SystemTime.js"></script>
+    <body onload="startTime()">
+        <div id="txt"></div>
+    </body>
+</div>
+</br>
+
+<div class="jumbotron" style="font-size: 15px">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Counter)
+                </th>
+
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Angle)
+                </th>*@
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Oxygen)
+                </th>
+
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Conveyor_Speed)
+                </th>*@
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Water)
+                </th>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.InducedDraftFan_Speed)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Blower_Speed)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Grate_Speed)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Counter)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelitem => item.Angle)
+                    </td>*@
+
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Oxygen)
+                    </td>
+
+                    @*<td>
+                        @Html.DisplayFor(modelitem => item.Conveyor_Speed)
+                    </td>*@
+
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Water)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelitem => item.InducedDraftFan_Speed)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Blower_Speed)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Grate_Speed)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -3,30 +3,17 @@
 }
 @*@model System.DateTime*@
 
-<h2>蒸汽壓力記錄</h2>
-<script src="~/Scripts/SystemTime.js"></script>
-<body onload="startTime()">
-    <div id="txt"></div>
-</body>
+<div style="font-size: 15px;background-color: lavender">
+    <h2>蒸汽壓力記錄</h2>
+    <p>每10秒刷新一次</p>
+    <script src="~/Scripts/SystemTime.js"></script>
+    <body onload="startTime()">
+        <div id="txt"></div>
+    </body>
+</div>
+</br>
 
-
-
-@Scripts.Render("~/bundles/clock")
-
-
-<script>
-    function DiplayClock() {
-        var currentTime = updateClock();
-        document.getElementById("clock").firstChild.nodeValue = currentTime;
-    }
-</script>
-
-
-
-
-
-<div class="jumbotron">
-    
+<div class="jumbotron">   
         @section scripts
     {
             <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -35,8 +22,9 @@
                 google.charts.load('current', { 'packages': ['corechart'] });
                 google.charts.setOnLoadCallback(DownloadChartData);
 
-
+                setInterval("DownloadChartData()", 10000)
                 function DownloadChartData() {
+
                     $.ajax({
                         url: '@Url.Action("GetChartData", "Home")',
                         success: function (response) {
@@ -48,6 +36,8 @@
                     });
                  
                 };
+
+
               function ShowChart(data){
                     var options = {
                         title: '鍊條式燃煤蒸汽鍋爐蒸汽壓力記錄',
