@@ -10,7 +10,12 @@ namespace chdemo.Controllers
 {
     public class AccountController : Controller
     {
-        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }  //seems like have no use of this page when HomeController combines in this project.
+
+
         public ActionResult Register()
         {
             member user = new member();
@@ -35,35 +40,38 @@ namespace chdemo.Controllers
             return View("Register", new member());
         }
 
+        //Login
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(member mModel)
+        public ActionResult Login(member user)
         {
-            using(er_modelEntities2 db = new er_modelEntities2())
+            using (er_modelEntities2 db = new er_modelEntities2())
             {
-                var usr = db.member.Single(u => u.Account == mModel.Account && u.Password == mModel.Password);
-                if (mModel != null)
+                var usr = db.member.Where(u => u.Account == user.Account && u.Password == user.Password).FirstOrDefault();
+                if (usr != null)
                 {
-                    Session["ID"] = usr.ID.ToString();
-                    Session["Name"] = usr.Account.ToString();
-                    return RedirectToAction("Index");
+                    Session["UserID"] = usr.Account.ToString();
+                    Session["Username"] = usr.Account.ToString();  //have no use in authorization
+
+                    return RedirectToAction("LoggedIn");
+
                 }
                 else
                 {
-                    ModelState.AddModelError("","Name or Password is wrong.");
+                    ModelState.AddModelError("", "Username or Password is wrong.");
                 }
             }
-
             return View();
         }
 
+
         public ActionResult LoggedIn()
         {
-            if(Session["ID"] != null)
+            if (Session["UserID"] != null)
             {
                 return View();
             }
@@ -71,6 +79,17 @@ namespace chdemo.Controllers
             {
                 return RedirectToAction("Login");
             }
+        }
+
+
+        public ActionResult Logout()
+        {
+
+            Session.Clear();
+            // Session["UserID"] = null; 
+            //this is not good cause session is still existing.
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }

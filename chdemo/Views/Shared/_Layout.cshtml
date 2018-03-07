@@ -14,7 +14,17 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/highchart")
 </head>
-<body style="background-image: url('../../Models/background.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed">
+<body>
+    <style>
+        body{
+            background-image: url('../../Models/background.jpg');
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed
+        }
+    </style>
     <div class="navbar navbar-inverse navbar-fixed-top">
         
         <div class="container">           
@@ -33,8 +43,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    
 
-                    <li>@Html.ActionLink("首頁", "Index", "Home")</li>
+<li>@Html.ActionLink("首頁", "Index", "Home")</li>
                     <li>@Html.ActionLink("歷史", "About", "Home")</li>
                     <li>@Html.ActionLink("鍋爐建議參數", "Contact", "Home")</li>
                 </ul>

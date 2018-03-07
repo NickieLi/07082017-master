@@ -14,10 +14,13 @@ namespace chdemo
     
     public partial class parameter
     {
+       
         public int Counter { get; set; }
+
         public float Angle { get; set; }
         public float Oxygen { get; set; }
         public float Conveyor_Speed { get; set; }
+
         public float Water { get; set; }
         public float InducedDraftFan_Speed { get; set; }
         public float Blower_Speed { get; set; }

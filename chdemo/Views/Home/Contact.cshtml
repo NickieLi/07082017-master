@@ -1,12 +1,38 @@
-﻿@model IEnumerable<parameter>
+﻿<!DOCTYPE html>
+<html>
+
+@model IEnumerable<parameter>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "工業4.智慧環保預測系統";
 }
-<div style="font-size: 15px;background-color: lavender">
+<div style="font-size: 15px;background-color: lavender;border-radius:10px;padding:5px">
     <h2>建議參數</h2>
-    <script src="~/Scripts/SystemTime.js"></script>
+
     <body onload="startTime()">
-        <div id="txt"></div>
+
+        <p id="time"></p>
+        <script>
+            function startTime() {
+                var today = new Date();
+                var y = today.getFullYear();
+                var mon = today.getMonth();
+                var d = today.getDate();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                var month = mon + 1;
+
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('time').innerHTML =
+                    y + "/" + month + "/" + d + " " + h + ":" + m + ":" + s;
+                var t = setTimeout(startTime, 500);
+            }
+            function checkTime(i) {
+                if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+                return i;
+            }
+        </script>
     </body>
 </div>
 </br>
@@ -16,35 +42,42 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Counter)
+                   
+                    @*@Html.DisplayNameFor(model => model.Counter)*@
+                    @Html.DisplayName("編號")
                 </th>
 
                 @*<th>
-                    @Html.DisplayNameFor(model => model.Angle)
-                </th>*@
+                        @Html.DisplayNameFor(model => model.Angle)
+                    </th>*@
 
                 <th>
-                    @Html.DisplayNameFor(model => model.Oxygen)
+                    @*@Html.DisplayNameFor(model => model.Oxygen)*@
+                    @Html.DisplayName("蒸汽鍋爐廢氣含氧濃度")
                 </th>
 
                 @*<th>
-                    @Html.DisplayNameFor(model => model.Conveyor_Speed)
-                </th>*@
+                        @Html.DisplayNameFor(model => model.Conveyor_Speed)
+                    </th>*@
 
                 <th>
-                    @Html.DisplayNameFor(model => model.Water)
-                </th>
-                
-                <th>
-                    @Html.DisplayNameFor(model => model.InducedDraftFan_Speed)
+                    @*@Html.DisplayNameFor(model => model.Water)*@
+                    @Html.DisplayName("補水即時補水量(m3/h)")
                 </th>
 
                 <th>
-                    @Html.DisplayNameFor(model => model.Blower_Speed)
+                    @*@Html.DisplayNameFor(model => model.InducedDraftFan_Speed)*@
+                    @Html.DisplayName("蒸汽引風機轉速(rpm)")
                 </th>
 
                 <th>
-                    @Html.DisplayNameFor(model => model.Grate_Speed)
+                    @*@Html.DisplayNameFor(model => model.Blower_Speed)*@
+                    @Html.DisplayName("蒸汽鼓風機轉速(rpm)")
+                </th>
+
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Grate_Speed)*@
+                    @Html.DisplayName("蒸汽爐排轉速(rpm)")
                 </th>
             </tr>
         </thead>
@@ -56,16 +89,16 @@
                         @Html.DisplayFor(modelitem => item.Counter)
                     </td>
                     @*<td>
-                        @Html.DisplayFor(modelitem => item.Angle)
-                    </td>*@
+                            @Html.DisplayFor(modelitem => item.Angle)
+                        </td>*@
 
                     <td>
                         @Html.DisplayFor(modelitem => item.Oxygen)
                     </td>
 
                     @*<td>
-                        @Html.DisplayFor(modelitem => item.Conveyor_Speed)
-                    </td>*@
+                            @Html.DisplayFor(modelitem => item.Conveyor_Speed)
+                        </td>*@
 
                     <td>
                         @Html.DisplayFor(modelitem => item.Water)
@@ -87,3 +120,4 @@
         </tbody>
     </table>
 </div>
+</html>

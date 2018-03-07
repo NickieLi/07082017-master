@@ -1,23 +1,49 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿<!DOCTYPE html>
+<html>
+@{
+    ViewBag.Title = "工業4.智慧環保預測系統";
 }
 @*@model System.DateTime*@
 
-<div style="font-size: 15px;background-color: lavender">
-    <h2>蒸汽壓力記錄</h2>
-    <p>每10秒刷新一次</p>
-    <script src="~/Scripts/SystemTime.js"></script>
+<div style="font-size: 15px;background-color:lavender;border-radius:20px;padding:25px">
+    <h1><b>蒸汽壓力記錄</b></h1>
     <body onload="startTime()">
-        <div id="txt"></div>
+
+        <h3 id="time"></h3>
+        <script>
+            function startTime() {
+                var today = new Date();
+                var y = today.getFullYear();
+                var mon = today.getMonth();
+                var d = today.getDate();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                var month = mon + 1;
+
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('time').innerHTML =
+                    y + "/" + month + "/" + d + " " + h + ":" + m + ":" + s;
+                var t = setTimeout(startTime, 500);
+            }
+            function checkTime(i) {
+                if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+                return i;
+            }
+        </script>
     </body>
+    <h4>每10秒刷新一次</h4>
+
+
 </div>
 </br>
 
-<div class="jumbotron">   
-        @section scripts
+<div class="jumbotron">
+    @section scripts
     {
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
 
                 google.charts.load('current', { 'packages': ['corechart'] });
                 google.charts.setOnLoadCallback(DownloadChartData);
@@ -34,7 +60,7 @@
                             alert(error);
                         }
                     });
-                 
+
                 };
 
 
@@ -50,7 +76,7 @@
                         vAxis: {
 
 
-                            title: '蒸汽壓力(kgf/cm2G)'
+                            title: '蒸汽壓力 (kgf/cm2G)'
 
                         },
                         hAxis: {
@@ -78,21 +104,22 @@
               };
 
 
-              //讓圖可以隨window size調整         
+              //讓圖可以隨window size調整
               $(window).resize(function () {
                   DownloadChartData()
               });
-                
 
-                   
-            </script>
-        }
+
+
+        </script>
+    }
 
 
     <div class="row">
         <div class="col-md-12">
-                <div id="chart-area" class="chart" style="position :center"></div>
-            </div>
+            <div id="chart-area" class="chart" style="position :center"></div>
+        </div>
     </div>
-    </div>
+</div>
 
+</html>

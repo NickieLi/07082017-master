@@ -1,43 +1,107 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿<!doctype html>
+<html lang="zh-tw">
+<a href="~/Views/Home/About.cshtml">~/Views/Home/About.cshtml</a>
+<head>
+    <link rel="stylesheet" href="~/Content/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/jquery-ui.theme.css">
+    <link rel="stylesheet" href="~/Content/jquery.ui.timepicker.css">
+    <link rel="stylesheet" href="~/Content/jquery-ui-timepicker-theme.css">
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.ui.timepicker.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.ui.tabs.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.ui.position.min.js"></script>
+
+</head>
+@{
+    ViewBag.Title = "工業4.智慧環保預測系統";
 }
 @*@model System.DateTime*@
 
-<div style="font-size: 15px;background-color: lavender">
+<div style="font-size: 15px;background-color: lavender;border-radius:10px;padding:5px">
     <h2>蒸汽壓力記錄</h2>
-    <script src="~/Scripts/SystemTime.js"></script>
+    @*<script src="~/Scripts/SystemTime.js"></script>
     <body onload="startTime()">
-        <div id="txt"></div>
+        <div id="time"></div>
+    </body>*@
+    <body onload="startTime()">
+
+        <p id="time"></p>
+        <script>
+            function startTime() {
+                var today = new Date();
+                var y = today.getFullYear();
+                var mon = today.getMonth();
+                var d = today.getDate();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                var month = mon + 1;
+
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('time').innerHTML =
+                    y + "/" + month + "/" + d + " " + h + ":" + m + ":" + s;
+                var t = setTimeout(startTime, 500);
+            }
+            function checkTime(i) {
+                if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+                return i;
+            }
+        </script>
     </body>
+
     @using (Html.BeginForm("About", "Home", FormMethod.Get))
     {
         <p>
-            <b>Date :</b> @Html.TextBox("date")
-            <b>Hours :</b> @Html.TextBox("Hours", String.Empty)
-            <br />
-            <br />
-            <form method="post"><input type="submit" value="Search" /></form>
+            @*<b>Date :</b> @Html.TextBox("date")
+                <b>Hours :</b> @Html.TextBox("Hours", String.Empty)*@
+            <label>日期: </label><input type="text" id="Date" autocomplete="off" /><br />
+            <script>
+                $(function () {
 
+                    $("#Date").datepicker({ inline: true, dateFormat: 'yy/m/d', autoclose: true});
+
+                });
+            </script>
+
+
+            <label>時間: </label><input type="text" id="Hours"  autocomplete="off"/><label>*請輸入想查詢的開始時間*</label>
+            <script>
+                 $(function () {
+
+                     $("#Hours").timepicker({ inline:true, autoclose: true, showPeriodLabels: false});
+
+                 });
+            </script>
+
+            <br />
+            <br />
+            <input type="button" id="search" value="Search" />
         </p>
     }
 
 
 </div>
-
+<br/>
 <div class="jumbotron">
     @section scripts
     {
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script>
 
-                google.charts.load('current', { 'packages': ['corechart'] });
-                google.charts.setOnLoadCallback(DownloadChartData);
 
-                //setInterval("DownloadChartData()", 10000)
-                function DownloadChartData() {
 
-                    $.ajax({
-                        url: '@Url.Action("SearchChartData", "Home")',
+            //setInterval("DownloadChartData()", 10000)
+                 function DownloadChartData(Date, Hours) {
+
+                $.ajax({
+                        //url: '@Url.Action("SearchChartData", "Home")',
+                        url: "/Home/SearchChartData/",
+                        data: { Date: Date, Hours: Hours },
+                        type: "post",
                         success: function (response) {
                             ShowChart(response);
                         },
@@ -94,7 +158,18 @@
                   DownloadChartData()
               });
 
+              $('#search').click(function () {
+                  google.charts.load('current', { 'packages': ['corechart'] });
+                  google.charts.setOnLoadCallback(SortedChartData);
+              })
 
+              function SortedChartData() {
+                  var Date = $('#Date').val();
+                  var Hours = $('#Hours').val();
+                  DownloadChartData(Date, Hours);
+
+              }
+              
 
         </script>
     }
@@ -106,4 +181,9 @@
         </div>
     </div>
 </div>
+
+
+
+</html>
+
 

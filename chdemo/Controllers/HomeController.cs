@@ -18,7 +18,7 @@ namespace chdemo.Controllers
 
         public ActionResult About(string Date, string Hours)
         {
-            SearchChartData(Date, Hours);
+            //SearchChartData(Date, Hours);
             return View();
         }
 
@@ -61,8 +61,8 @@ namespace chdemo.Controllers
             var sortbytime = data.OrderByDescending(x => x.Minutes).ToList();
 
             dt.AddColumn("Date", "string");
-            dt.AddColumn("實際蒸汽壓力(kgf/cm2G)", "number");
-            dt.AddColumn("預測蒸汽壓力(kgf/cm2G)", "number");
+            dt.AddColumn("實際蒸汽壓力 (kgf/cm2G)", "number");
+            dt.AddColumn("預測蒸汽壓力 (kgf/cm2G)", "number");
 
             int counter = 0;
             foreach (var item in sortbytime)
@@ -95,25 +95,29 @@ namespace chdemo.Controllers
                     if (!string.IsNullOrEmpty(Hours))
                     {
                         string hr = Convert.ToString(Hours);
-                        date = date.Where(c => c.Hours.Contains(Hours));
-                    }
+                        
+                    date = date.Where(c => c.Date.Contains(Date));
+                    date = date.Where(c => c.Hours.Equals(Hours));
+                  
+                }
                     else
                     {
-                        date = date.Where(c => c.Date.Contains(Date));
-                    }
+                    date = from d in db.historypressure
+                           select d; ;
+                }
                 }
                 else
                 {
                     date = from d in db.historypressure
                            select d; ;
                 }
-
-
+         
+      
             var sortbytime = date.OrderByDescending(x => x.Minutes).ToList();
 
             dt.AddColumn("Date", "string");
-            dt.AddColumn("實際蒸汽壓力(kgf/cm2G)", "number");
-            dt.AddColumn("預測蒸汽壓力(kgf/cm2G)", "number");
+            dt.AddColumn("實際蒸汽壓力 (kgf/cm2G)", "number");
+            dt.AddColumn("預測蒸汽壓力 (kgf/cm2G)", "number");
 
             int counter = 0;
             foreach (var item in sortbytime)
