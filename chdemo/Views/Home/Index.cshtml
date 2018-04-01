@@ -5,11 +5,11 @@
 }
 @*@model System.DateTime*@
 
-<div style="font-size: 15px;background-color:lavender;border-radius:20px;padding:25px">
-    <h1><b>蒸汽壓力記錄</b></h1>
+<div style="font-size: 15px;background-color:transparent;border-radius:20px;padding:25px">
+    <h1 style="color:white">蒸汽壓力記錄</h1>
     <body onload="startTime()">
 
-        <h3 id="time"></h3>
+        <h3 id="time" style="color:white"></h3>
         <script>
             function startTime() {
                 var today = new Date();
@@ -33,7 +33,7 @@
             }
         </script>
     </body>
-    <h4>每10秒刷新一次</h4>
+    <h5 style="color:white">每10秒刷新一次</h5>
 
 
 </div>
@@ -67,25 +67,39 @@
               function ShowChart(data){
                     var options = {
                         title: '鍊條式燃煤蒸汽鍋爐蒸汽壓力記錄',
-                        height: 300, //如果要改變圖的長度就改這邊，width刪掉
+                        height: 350, //如果要改變圖的長度就改這邊，width刪掉
                         axisTitlesPosition: "蒸汽壓力記錄",
 
-                        leged: { ponsition: 'in' },
-                        chartArea: { width: "70%", height: "50%" },
+                        titleTextStyle: {
+                            fontSize:20,
+                        },
+
+                        legend: { position: 'bottom',fontSize:40},
+                        chartArea: { width: "80%", height: "60%" },
 
                         vAxis: {
 
 
-                            title: '蒸汽壓力 (kgf/cm2G)'
-
+                            title: '蒸汽壓力 (kgf/cm2G)',
+                            titleTextStyle: {
+                                fontSize: 15,
+                            },
+                            textStyle: {
+                                fontSize: 18,
+                            },
                         },
                         hAxis: {
 
                             title: '時間',
                             direction: '-1',
                             slantedText: 'false',
-                            showTextEvery: '1'
-
+                            showTextEvery: '1',
+                            titleTextStyle: {
+                                fontSize: 15,
+                            },
+                            textStyle: {
+                                fontSize: 18,
+                            },
 
                         },
 

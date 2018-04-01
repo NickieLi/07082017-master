@@ -1,6 +1,6 @@
 ﻿<!doctype html>
 <html lang="zh-tw">
-<a href="~/Views/Home/About.cshtml">~/Views/Home/About.cshtml</a>
+<a href="~/Views/Home/About.cshtml"></a>
 <head>
     <link rel="stylesheet" href="~/Content/jquery-ui.css">
     <link rel="stylesheet" href="~/Content/jquery-ui.theme.css">
@@ -20,15 +20,11 @@
 }
 @*@model System.DateTime*@
 
-<div style="font-size: 15px;background-color: lavender;border-radius:10px;padding:5px">
-    <h2>蒸汽壓力記錄</h2>
-    @*<script src="~/Scripts/SystemTime.js"></script>
-    <body onload="startTime()">
-        <div id="time"></div>
-    </body>*@
+<div style="font-size: 15px;background-color:transparent;border-radius:20px;padding:25px">
+    <h1 style="color:white">歷史蒸汽壓力記錄</h1>
     <body onload="startTime()">
 
-        <p id="time"></p>
+        <h3 id="time" style="color:white"></h3>
         <script>
             function startTime() {
                 var today = new Date();
@@ -56,36 +52,34 @@
     @using (Html.BeginForm("About", "Home", FormMethod.Get))
     {
         <p>
-            @*<b>Date :</b> @Html.TextBox("date")
-                <b>Hours :</b> @Html.TextBox("Hours", String.Empty)*@
-            <label>日期: </label><input type="text" id="Date" autocomplete="off" /><br />
+            <label style="color:white;font-size:larger">日期:<input type="text" id="Date" autocomplete="off" style="color:white"/></label>
             <script>
                 $(function () {
 
-                    $("#Date").datepicker({ inline: true, dateFormat: 'yy/m/d', autoclose: true});
+                    $("#Date").datepicker({ inline: true, dateFormat: 'yy/m/d', autoclose: true });
 
                 });
             </script>
 
 
-            <label>時間: </label><input type="text" id="Hours"  autocomplete="off"/><label>*請輸入想查詢的開始時間*</label>
+            <label style="color:white;font-size:larger">時間: <input type="text" id="Hours" autocomplete="off" style="color:white" /><label style="color:white">*請輸入想查詢的開始時間*</label></label>
             <script>
-                 $(function () {
+                $(function () {
 
-                     $("#Hours").timepicker({ inline:true, autoclose: true, showPeriodLabels: false});
+                    $("#Hours").timepicker({ inline: true, autoclose: true, showPeriodLabels: false });
 
-                 });
+                });
             </script>
 
             <br />
             <br />
-            <input type="button" id="search" value="Search" />
+            <input type="button" id="search" value="查詢" style="border-radius:10px;text-align:center;padding: 0.01% 0.5% 1% 1%;" />
         </p>
     }
 
 
 </div>
-<br/>
+
 <div class="jumbotron">
     @section scripts
     {
@@ -169,7 +163,7 @@
                   DownloadChartData(Date, Hours);
 
               }
-              
+
 
         </script>
     }
